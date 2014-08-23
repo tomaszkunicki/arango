@@ -8,11 +8,11 @@ try {
 
 function check(done, f) {
     try {
-        f()
-        done()
+        f();
+        done();
     } catch (e) {
         console.log(e);
-        done(e)
+        done(e);
     }
 }
 
@@ -39,7 +39,7 @@ describe("action", function() {
                     action: {
                         "callback": "function (req,res){\n \n res.status = 200;\n; res.contentType = \"text/html\";\n res.body = \"Already existing route!\";\n }"
                     }
-                }
+                };
                 route.url = {
                     "match": "/alreadyExistingRoute",
                     "methods": ["GET"]
@@ -61,7 +61,7 @@ describe("action", function() {
                     }).done(done);
             });
         });
-    })
+    });
 
     it('define an action for which no route exists', function(done) {
 
@@ -75,11 +75,11 @@ describe("action", function() {
             error: function(err) {
                 return err;
             }
-        })
+        });
         check(done, function() {
             db.action.getActions().should.have.property('someAction');
         });
-    })
+    });
 
 
     it('call this action and expect a route not found error', function(done) {
@@ -91,7 +91,7 @@ describe("action", function() {
             });
         });
 
-    })
+    });
 
     it('delete this action', function(done) {
 
@@ -99,7 +99,7 @@ describe("action", function() {
         check(done, function() {
             db.action.getActions().should.not.have.property('someAction');
         });
-    })
+    });
 
     it('define an action for which a route exists', function(done) {
 
@@ -113,12 +113,12 @@ describe("action", function() {
             error: function(err) {
                 return err;
             }
-        })
+        });
         check(done, function() {
             db.action.getActions().should.have.property('someAction');
         });
 
-    })
+    });
 
     it('call this action and expect the route to be found', function(done) {
         db.action.submit("someAction", function(err, ret, message) {
@@ -128,7 +128,7 @@ describe("action", function() {
             });
         });
 
-    })
+    });
 
     it('lets get the list of all documents of collection', function(done) {
         db.document.list("_routing", function(err, ret, message) {
@@ -136,7 +136,7 @@ describe("action", function() {
                 message.status.should.equal(200);
             });
         });
-    })
+    });
 
     it('call the action defined in setup action and expect the route to be found', function(done) {
         db.action.submit("hello", function(err, ret, message) {
@@ -148,7 +148,7 @@ describe("action", function() {
             });
         });
 
-    })
+    });
 
     it('lets get the list of all documents of collection', function(done) {
         db.document.list("_routing", function(err, ret, message) {
@@ -156,7 +156,7 @@ describe("action", function() {
                 message.status.should.equal(200);
             });
         });
-    })
+    });
 
     it('delete the action "hello".....', function(done) {
         db.action.undefine("hello");
@@ -164,7 +164,7 @@ describe("action", function() {
             db.action.getActions().should.not.have.property('hello');
             Object.keys(db.action.getActions()).length.should.eql(1);
         });
-    })
+    });
 
     it('lets get the list of all documents of collection', function(done) {
         db.document.list("_routing", function(err, ret, message) {
@@ -172,7 +172,7 @@ describe("action", function() {
                 message.status.should.equal(200);
             });
         });
-    })
+    });
 
     it('lets get the list of all documents of collection', function(done) {
         db.document.list("_routing", function(err, ret, message) {
@@ -180,7 +180,7 @@ describe("action", function() {
                 message.status.should.equal(200);
             });
         });
-    })
+    });
 
     it('...and check that route has been deleted to', function(done) {
         db.document.get(actions.hello.route, function(err, ret, message) {
@@ -192,4 +192,4 @@ describe("action", function() {
     })
 
 
-})
+});

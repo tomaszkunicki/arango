@@ -203,9 +203,9 @@ require.relative = function(parent) {
 require.register("kaerus-component-microtask/index.js", function(exports, require, module){
 
 (function(root){
-    "use strict"
+    "use strict";
 
-    try {root = global} catch(e){ try {root = window} catch(e){} };
+    try {root = global} catch(e){ try {root = window} catch(e){} }
 
     var defer, deferred, observer, queue = [];
     
@@ -231,8 +231,8 @@ require.register("kaerus-component-microtask/index.js", function(exports, requir
         channel.port1.onmessage = function () { (fifo.shift())() };
         defer = function (f){ fifo[fifo.length] = f; channel.port2.postMessage(0); };
     } 
-    else if(typeof root.setTimeout === 'function') defer = function(f){ root.setTimeout(f,0); } 
-    else throw new Error("No candidate for microtask defer()")
+    else if(typeof root.setTimeout === 'function') defer = function(f){ root.setTimeout(f,0); };
+    else throw new Error("No candidate for microtask defer()");
 
     deferred = head;
 
@@ -274,7 +274,7 @@ var task = require('microtask'); // nextTick shim
 (function(root){
     "use strict"
 
-    try {root = global} catch(e){ try {root = window} catch(e){} };
+    try {root = global} catch(e){ try {root = window} catch(e){} }
 
     var slice = Array.prototype.slice,
         isArray = Array.isArray;
@@ -1207,7 +1207,7 @@ var Base64 = {
         return ret.join('');    
     },
     decode: function(buf){
-        var ret = [], z, x, i, b1, b2, w = [];
+        var ret = [], z, x, i, b1, b2, w = [], l;
 
         var len = buf.length;
         var code = buf.indexOf.bind(b64);
@@ -1254,12 +1254,12 @@ var Base64 = {
 
         /* padding */
         if((pad = data.length % 4)){
-            data = data.concat(Array(pad+1).join(b64[64]));
+            data = data.concat(new Array(pad+1).join(b64[64]));
         }
 
         return this.decode(data);
     }
-}
+};
 
 module.exports = Base64;
 });
@@ -1435,7 +1435,7 @@ Arango.prototype = {
     },
     "request": request,
     "Promise": Promise
-}
+};
 
 function attach(db, api) {
     if (typeof api === 'string') {
@@ -3275,7 +3275,7 @@ function AdminAPI(db) {
          */
         "log": function(options, callback) {
 
-            params = "";
+            var params = "";
             if (options) {
                 Object.keys(options).forEach(function(param) {
                     params += param + '=' + options[param] + "&";
@@ -3343,7 +3343,7 @@ function AqlfunctionAPI(db) {
          * String namespace  - If set all functions in this namespace will be returned
          */
         "get": function(namespace, callback) {
-            params = "";
+            var params = "";
             if (namespace) {
                 params += '?namespace=' + encodeURIComponent(namespace);
             }
@@ -3725,7 +3725,7 @@ QueryAPI.prototype = {
         return exec_query(this, "create", arguments).then(on_result);
     },
     "count": function(num) {
-        this.options.count = num > 0 ? true : false;
+        this.options.count = num > 0;
         this.options.batchSize = num > 0 ? num : undefined;
 
         return this;

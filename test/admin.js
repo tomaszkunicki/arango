@@ -8,11 +8,11 @@ try {
 
 function check(done, f) {
     try {
-        f()
-        done()
+        f();
+        done();
     } catch (e) {
         //console.log(e);
-        done(e)
+        done(e);
     }
 }
 
@@ -28,7 +28,7 @@ describe("admin", function() {
                 ret.should.have.property('details');
             });
         });
-    })
+    });
     it('should be able to get the arango dbs statistics', function(done) {
         db.admin.statistics(function(err, ret) {
             check(done, function() {
@@ -39,7 +39,7 @@ describe("admin", function() {
                 ret.code.should.equal(200);
             });
         });
-    })
+    });
     it('should be able to get the arango dbs statistics description', function(done) {
         db.admin.statisticsDescription(function(err, ret) {
             check(done, function() {
@@ -49,7 +49,7 @@ describe("admin", function() {
                 ret.code.should.equal(200);
             });
         });
-    })
+    });
 
     it('should be able to get the arango dbs routesReload', function(done) {
         db.admin.routesReload(function(err, ret) {
@@ -58,7 +58,7 @@ describe("admin", function() {
                 ret.code.should.equal(200);
             });
         });
-    })
+    });
     it('should be able to flush the arango dbs modules', function(done) {
         db.admin.modulesFlush(function(err, ret) {
             check(done, function() {
@@ -75,7 +75,7 @@ describe("admin", function() {
                 ret.code.should.equal(200);
             });
         });
-    })
+    });
     it('should be able to get an echo from the arango db', function(done) {
         db.admin.echo('GET', null, null, null, function(err, ret) {
             check(done, function() {
@@ -84,7 +84,7 @@ describe("admin", function() {
                 ret.should.have.property('protocol');
             });
         });
-    })
+    });
     it('should be able to get logs from the arango db without options', function(done) {
         db.admin.log(null, function(err, ret) {
             check(done, function() {
@@ -95,7 +95,7 @@ describe("admin", function() {
                 ret.should.have.property('level');
             });
         });
-    })
+    });
     it('should be able to get logs from the arango db with full option set', function(done) {
         var options = {};
         options.upto = "debug";
@@ -112,7 +112,7 @@ describe("admin", function() {
                 ret.lid.length.should.equal(15);
             });
         });
-    })
+    });
     it('should return a 400 as we pass a bad log level to logs', function(done) {
         var options = {};
         options.upto = "badlevel";
@@ -126,4 +126,4 @@ describe("admin", function() {
             });
         });
     })
-})
+});

@@ -165,7 +165,7 @@ describe("cursor", function() {
         cursorData.bindVars.name = "%val2%";
         db.cursor.create(cursorData, function(err, ret, message) {
             check(done, function() {
-                cursor = ret;
+                var cursor = ret;
                 ret.error.should.equal(false);
                 ret.hasMore.should.equal(true);
                 message.status.should.equal(201);
